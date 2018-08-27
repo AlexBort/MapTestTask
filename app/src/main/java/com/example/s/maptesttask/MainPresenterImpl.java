@@ -49,9 +49,9 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     @Override
     public void clickTrackDistance(LocationProvider provider, String meters) {
         provider.setDistance(Float.parseFloat(meters));
-        // TODO: 27.08.2018  ЧТО ДЕЛАТЬ ДАЛЬШЕ, И ОБНОВИТ ЛИ НАСТРОЙКИ ПРОВАЙДЕРА ЭТА ТЕМА, И КАК ПРОВЕРИТЬ, БУДЕТ ЛИ ОНО ВЫСЛЕЖИВАТЬ, ИЛИ НЕТ?
-        // mMainView.showUpdateLocation();
     }
+    // TODO: 27.08.2018  ЧТО ДЕЛАТЬ ДАЛЬШЕ, И ОБНОВИТ ЛИ НАСТРОЙКИ ПРОВАЙДЕРА ЭТА ТЕМА, И КАК ПРОВЕРИТЬ, БУДЕТ ЛИ ОНО ВЫСЛЕЖИВАТЬ, ИЛИ НЕТ?
+    // mMainView.showUpdateLocation();
 
     @Override
     public void updateLocation(Location updateLocation, String check) {

@@ -23,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        if (GoogleServiceUtils.isGoogleServiceAvailable(this)) {
 //            GoogleServiceUtils.getLocationPermission(this);
 //        }
+
+        presenter = MainPresenterImpl.getPresenter();
         locationProvider = new LocationProvider(this, this);
         setUpMapIfNeeded();
 
@@ -94,10 +97,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
 
-            // TODO: 27.08.2018 если оно с такой логикой не будет работать, переделаем!!
+            // FIXME: 27.08.2018  27.08.2018 если оно с такой логикой не будет работать, переделаем!!
             if (!Utils.isLocationEnabled(this))
                 Utils.makeSnackbar(rootLinear, Constants.snackMessage);
-            else Toast.makeText(this, "TEST DEBUG", Toast.LENGTH_SHORT).show();
+          //  else Toast.makeText(this, "TEST DEBUG", Toast.LENGTH_SHORT).show();
+            // FIXME: 27.08.2018 по-ходу оно вообще очень криво работает!!
         }
     }
 
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
         LatLng latLng = Utils.convertToLatLng(location);
+        Toast.makeText(this, "check" + String.valueOf(latLng.latitude), Toast.LENGTH_SHORT).show();
         Utils.setMarker(latLng, mGoogleMap);
     }
 
@@ -122,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return false;
     }
-
-
-
 
 
     public void trackDistance(View view) {
