@@ -40,12 +40,10 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
 
     @Override
     public void clickTrackDistance(Location location, String meters, Context context) {
-
         LatLng latLng = Utils.convertToLatLng(location);
         //   Toast.makeText(context, meters, Toast.LENGTH_SHORT).show();
         mLocation = location;
         Utils.startService(context, Float.parseFloat(meters));
-
     }
 
     @Override

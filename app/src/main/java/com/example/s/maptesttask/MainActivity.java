@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private boolean checkLocation() {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (isPermissionGranted(getApplicationContext(), PERMISSIONS_LOCATION)) {
+            if (Utils.isPermissionGranted(getApplicationContext(), PERMISSIONS_LOCATION)) {
                 // Permission Granted Already
                 return true;
             }
@@ -123,15 +123,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return false;
     }
 
-    public static boolean isPermissionGranted(Context context, String[] permissions) {
-        for (String permission : permissions) {
-            int result = ContextCompat.checkSelfPermission(context, permission);
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
 
 
@@ -142,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //   locationProvider.setDistance(Float.parseFloat(meters));
     }
 
+    // метод презентера!!
     @Override
     public void showUpdateLocation(String message) {
 
