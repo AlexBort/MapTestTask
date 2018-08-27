@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MapTestTask</string>
+
+    // id api: maptesttask-214605
+    <string name="google_maps_key">AIzaSyCKTyNbNauFAI87y2K_EnGoxO1F50i2EKE</string>
+    <string name="hint">specify distance (in meters)</string>
+    <string name="track">TRACK DISTANCE</string>
+    <string name="snackbar_text">"Please, enable geolocation if you have not yet enabled"</string>
+    <string name="notif_descrip">"Start tracking specified distance"</string> // We'll track the distance specified by you
+    <string name="notif_result">You have passed specified distance</string>
+
 </resources>
