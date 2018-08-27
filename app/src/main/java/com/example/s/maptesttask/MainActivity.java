@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
 
+            // TODO: 27.08.2018 если оно с такой логикой не будет работать, переделаем!!
             if (!Utils.isLocationEnabled(this))
                 Utils.makeSnackbar(rootLinear, Constants.snackMessage);
             else Toast.makeText(this, "TEST DEBUG", Toast.LENGTH_SHORT).show();
@@ -132,17 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p>
-     * This should only be called once and when we are sure that mGoogleMap is not null.
-     */
-    private void setUpMap() {
-        LatLng latLng = new LatLng(0, 0);
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-    }
+
 
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
@@ -154,5 +145,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void showUpdateLocation(String message) {
 
+    }
+
+    /**
+     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
+     * just add a marker near Africa.
+     * <p>
+     * This should only be called once and when we are sure that mGoogleMap is not null.
+     */
+    private void setUpMap() {
+        LatLng latLng = new LatLng(0, 0);
+        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 }
