@@ -13,11 +13,21 @@ public interface MainContract {
         void updateLocation(Location updateLocation, String check);
 
         void setMainView(MainView mainView);
+
+        void initProvider();
+
+        void setContext(Context context); // TODO: 28.08.2018 МОЖЕТ УБРАТЬ ЭТОТ МЕТОД, ПО НЕНАДОБНОСТИ!!
+
+        void connectProvider();
+
+        void disconnectProvider();
         //  LatLng passLatLng(LatLng latLng);
     }
 
     interface MainView {
         void showUpdateLocation(String message);
+        //   void requestForPermissions();
+        //    void showSnackBar();
     }
 
 

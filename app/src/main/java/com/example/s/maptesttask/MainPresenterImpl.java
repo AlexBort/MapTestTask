@@ -1,21 +1,39 @@
 package com.example.s.maptesttask;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
+import android.os.Build;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MainPresenterImpl implements MainContract.MainPresenter {
+// FIXME: 28.08.2018 ЕСЛИ СТАТИЧНОСТЬ PRESENTER-A НЕ ПОНАДОБИТСЯ, ТО ПЕРЕПИШЕМ С КОНСТРУКТОРОМ, Т.К. МНОГО РАБОТАЕМ С КОНТЕКСТОМ, А ОН НАМ НУЖЕН!!
+public class MainPresenterImpl implements MainContract.MainPresenter, LocationProvider.LocationCallback {
 
+    public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String TAG = "MainPresenterImpl";
     private MainContract.MainView mMainView;
     private Context context;
     private Location mLocation;
     private static MainPresenterImpl presenter = new MainPresenterImpl();
-
+    private LocationProvider locationProvider;
+    private float step = 5;
+    private float distance = 0;
+    private Location startLocation;
+    private Location previousLocation;
+    private GoogleMap mGoogleMap;
 
     private MainPresenterImpl() {
 
+    }
+
+    public void initProvider() {
+        locationProvider = new LocationProvider(App.getGlobalContext(), this);
     }
 
     // TODO: 26.08.2018 сделать его потокобезопасным
@@ -23,19 +41,70 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         return presenter;
     }
 
+    @Override
+    public void setMainView(MainContract.MainView mainView) {
+        mMainView = mainView;
+    }
 
-//    public MainPresenterImpl(MainContract.MainView mainView, Context context) {
-//        this.mainView = mainView;
-//        this.context = context;
-//    }
-//
-//    public MainPresenterImpl(MainContract.MainView mainView) {
-//        this.mainView = mainView;
-//    }
-//
-//    public MainPresenterImpl(Context context) {
-//        this.context = context;
-//    }
+    @Override
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public void connectProvider() {
+        locationProvider.connect();
+    }
+
+    @Override
+    public void disconnectProvider() {
+        locationProvider.disconnect();
+    }
+
+
+    @Override
+    public void handleNewLocation(Location location) {
+        Location currentLocation = location;
+        Log.d(TAG, location.toString());
+        LatLng latLng = Utils.convertToLatLng(location);
+
+        // FIXME: 28.08.2018 это надо выносить в MainActivity!!!
+        // FIXME: 28.08.2018 и надо понять, где ставить эту строчку. В конце этого метода, или в начале!!
+        Utils.setMarker(latLng, mGoogleMap);
+
+//        Location startLocation = location;
+
+        initLocation(location);
+        if (previousLocation != currentLocation) {
+            if (checkDistance(previousLocation, currentLocation) >= 0.01) {
+                distance += currentLocation.distanceTo(startLocation);
+                previousLocation = currentLocation;
+            }
+        }
+
+        if (distance >= step) {
+            startLocation = currentLocation;
+            LatLng latLng1 = Utils.convertToLatLng(startLocation);
+            Toast.makeText(App.getGlobalContext(), "check 5 meters: " + String.valueOf(distance), Toast.LENGTH_SHORT).show();
+            distance = 0;
+        }
+
+        // FIXME: 28.08.2018 в MainActivity тоже надо будет передать!!
+       // Utils.setMarker();
+
+    }
+
+    private float checkDistance(Location startLocation, Location endLocation) {
+        return startLocation.distanceTo(endLocation);
+    }
+
+    private void initLocation(Location location) {
+        if (startLocation == null) {
+            startLocation = location;
+            previousLocation = location;
+        }
+    }
+
 
 
     @Override
@@ -58,10 +127,57 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         mMainView.showUpdateLocation(check);
     }
 
-    @Override
-    public void setMainView(MainContract.MainView mainView) {
-        mMainView = mainView;
-    }
 
 
-}
+
+
+
+}// TODO: 28.08.2018 END CLASS !!!
+
+
+//    @SuppressLint("MissingPermission")
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mGoogleMap = googleMap;
+//        if (checkLocation()) {
+//            mGoogleMap.setMyLocationEnabled(true);
+//
+//            // FIXME: 27.08.2018  27.08.2018 если оно с такой логикой не будет работать, переделаем!!
+//            if (!Utils.isLocationEnabled(App.getGlobalContext()))
+//                mMainView.showSnackBar();
+//            // FIXME: 27.08.2018 по-ходу оно вообще очень криво работает!!
+//        }
+//    }
+
+//    private boolean checkLocation() {
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            // FIXME: 28.08.2018 тут из-за того, что context, как входящий, могут быть проблемы!!
+//            if (Utils.isPermissionGranted(App.getGlobalContext(), PERMISSIONS_LOCATION)) {
+//                // Permission Granted Already
+//                return true;
+//            }
+//            // Request Permission
+//
+//            mMainView.requestForPermissions();
+//        } else {
+//            return true;
+//        }
+//        return false;
+//    }
+//}
+
+
+// TODO: 28.08.2018 КОНСТРУКТОРЫ, КОТОРЫМИ Я РАНЬШЕ ПОЛЬЗОВАЛСЯ!!
+//    public MainPresenterImpl(MainContract.MainView mainView, Context context) {
+//        this.mainView = mainView;
+//        this.context = context;
+//    }
+//
+//    public MainPresenterImpl(MainContract.MainView mainView) {
+//        this.mainView = mainView;
+//    }
+//
+//    public MainPresenterImpl(Context context) {
+//        this.context = context;
+//    }
+

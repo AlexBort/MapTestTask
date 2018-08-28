@@ -24,8 +24,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback
-        /*, LocationListener*/, LocationProvider.LocationCallback, MainContract.MainView {
+// TODO: 28.08.2018 там, где LocationProvider, использоваться обязательно Presenter. Там где карта ставится, можно в MainActivity всё!
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
+        MainContract.MainView {
 
     public static final int PERMISSION_REQUEST_CODE_ACTIVITY = 1101;
     public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
@@ -40,14 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MainPresenterImpl presenterUpdate;
     @BindView(R.id.edit_distance)
     EditText editMeters;
-    LocationRequest locationRequest;
-    float step = 5;
-    float distance = 0;
-    private Location startLocation;
-    private Location previousLocation;
-
-//    private LocationManager locationManager;
-//    private LocationListener locationListener;
+    // LocationRequest locationRequest;
 
 
     @SuppressLint("MissingPermission")
@@ -59,9 +54,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        if (GoogleServiceUtils.isGoogleServiceAvailable(this)) {
 //            GoogleServiceUtils.getLocationPermission(this);
 //        }
-
         presenter = MainPresenterImpl.getPresenter();
-        locationProvider = new LocationProvider(this, this);
+        presenter.setMainView(this);
+        presenter.setContext(this);
+        presenter.initProvider();
         setUpMapIfNeeded();
 
     }
@@ -70,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        locationProvider.connect();
+        presenter.connectProvider();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        locationProvider.disconnect();
+        presenter.disconnectProvider();
     }
 
     private void setUpMapIfNeeded() {
@@ -105,41 +101,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void initLocation(Location location) {
-        if (startLocation == null) {
-            startLocation = location;
-            previousLocation = location;
-        }
-    }
+//    private void initLocation(Location location) {
+//        if (startLocation == null) {
+//            startLocation = location;
+//            previousLocation = location;
+//        }
+//    }
 
-    private float checkDistance(Location startLocation, Location endLocation) {
-        return startLocation.distanceTo(endLocation);
-    }
+//    private float checkDistance(Location startLocation, Location endLocation) {
+//        return startLocation.distanceTo(endLocation);
+//    }
 
-    @Override
-    public void handleNewLocation(Location location) {
-        Location currentLocation = location;
-        Log.d(TAG, location.toString());
-        LatLng latLng = Utils.convertToLatLng(location);
-        Utils.setMarker(latLng, mGoogleMap);
-//        Location startLocation = location;
-
-        initLocation(location);
-        if (previousLocation != currentLocation) {
-            if (checkDistance(previousLocation, currentLocation) >= 0.01) {
-                distance += currentLocation.distanceTo(startLocation);
-                previousLocation = currentLocation;
-            } }
-
-        if (distance >= step) {
-            startLocation = currentLocation;
-            LatLng latLng1 = Utils.convertToLatLng(startLocation);
-            Toast.makeText(this, "check 5 meters: " + String.valueOf(distance), Toast.LENGTH_SHORT).show();
-            distance=0;
-        }
-
-        Utils.setMarker(latLng, mGoogleMap);
-    }
+//    @Override
+//    public void handleNewLocation(Location location) {
+//        Location currentLocation = location;
+//        Log.d(TAG, location.toString());
+//        LatLng latLng = Utils.convertToLatLng(location);
+//        Utils.setMarker(latLng, mGoogleMap);
+////        Location startLocation = location;
+//
+//        initLocation(location);
+//        if (previousLocation != currentLocation) {
+//            if (checkDistance(previousLocation, currentLocation) >= 0.01) {
+//                distance += currentLocation.distanceTo(startLocation);
+//                previousLocation = currentLocation;
+//            }
+//        }
+//
+//        if (distance >= step) {
+//            startLocation = currentLocation;
+//            LatLng latLng1 = Utils.convertToLatLng(startLocation);
+//            Toast.makeText(App.getGlobalContext(), "check 5 meters: " + String.valueOf(distance), Toast.LENGTH_SHORT).show();
+//            distance = 0;
+//        }
+//
+//        Utils.setMarker(latLng, mGoogleMap);
+//    }
 
 
     private boolean checkLocation() {
@@ -157,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    // FIXME: 28.08.2018 НАПИШЕМ ЛОГИКУ ПЕРЕНОСА LOACTION_PROVIDER-A В PRESENTER, И ОТОБРАЖЕНИЕ НА КАРТЕ В ,AIN_ACTIVITY,
+    // FIXME: 28.08.2018 ПОСМОТРИМ, КАК ОНО РАБОТАЕТ (ТРЕКАЕТ ДИСТАНЦИЮ), И ТОГДА ПЕРЕЙДЕМ К ОБРАБОТКЕ КНОПКИ
+    // FIXME: 28.08.2018 И СООТВЕТСТВЕННО К СЕРВИСУ!!
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
         Utils.hideKeyBoard(this, view);
@@ -169,6 +169,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showUpdateLocation(String message) {
 
     }
+
+
+//    @Override
+//    public void showSnackBar() {
+//        Utils.makeSnackbar(rootLinear, Constants.snackMessage);
+//    }
 
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
