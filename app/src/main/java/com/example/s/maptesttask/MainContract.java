@@ -24,6 +24,7 @@ public interface MainContract {
         void connectProvider();
 
         void disconnectProvider();
+        void passMetersFromUser(String meters);
         //  LatLng passLatLng(LatLng latLng);
     }
 

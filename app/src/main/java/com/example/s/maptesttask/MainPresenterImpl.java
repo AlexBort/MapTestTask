@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 // FIXME: 28.08.2018 УЖЕ ПРИДУМАЛ, КАК ПО-ДРУГОМУ С КОНТЕКСТОМ РАБОТАТЬ, НО ВОЗМОЖНО СТАТИЧНОСТЬ БУДЕТ ЕЩЕ НУЖНА
 public class MainPresenterImpl implements MainContract.MainPresenter, LocationProvider.LocationCallback {
 
-    public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String TAG = "MainPresenterImpl";
     private MainContract.MainView mMainView;
     private Context mContext;
@@ -61,6 +60,12 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
         locationProvider.disconnect();
     }
 
+    @Override
+    public void passMetersFromUser(String meters) {
+        step = Float.parseFloat(meters);
+        Log.e(TAG, "passMetersFromUser: " + "");
+    }
+
 
     @Override
     public void handleNewLocation(Location location) {
@@ -78,6 +83,8 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
                 previousLocation = currentLocation;
             }
         }
+
+        mMainView.showToast("check distance (is it correct) :" + String.valueOf(step));
 
         if (distance >= step) {
             startLocation = currentLocation;

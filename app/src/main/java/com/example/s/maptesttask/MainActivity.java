@@ -2,18 +2,15 @@ package com.example.s.maptesttask;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.location.Location;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -159,8 +156,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // FIXME: 28.08.2018 И СООТВЕТСТВЕННО К СЕРВИСУ!!
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
+        presenter.passMetersFromUser(meters);
         Utils.hideKeyBoard(this, view);
-        presenter.clickTrackDistance(locationProvider, meters);
+      //  presenter.clickTrackDistance(locationProvider, meters);
         //   locationProvider.setDistance(Float.parseFloat(meters));
     }
 
