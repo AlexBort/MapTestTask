@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 // FIXME: 28.08.2018 ЕСЛИ СТАТИЧНОСТЬ PRESENTER-A НЕ ПОНАДОБИТСЯ, ТО ПЕРЕПИШЕМ С КОНСТРУКТОРОМ, Т.К. МНОГО РАБОТАЕМ С КОНТЕКСТОМ, А ОН НАМ НУЖЕН!!
+// FIXME: 28.08.2018 УЖЕ ПРИДУМАЛ, КАК ПО-ДРУГОМУ С КОНТЕКСТОМ РАБОТАТЬ, НО ВОЗМОЖНО СТАТИЧНОСТЬ БУДЕТ ЕЩЕ НУЖНА
 public class MainPresenterImpl implements MainContract.MainPresenter, LocationProvider.LocationCallback {
 
     public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
