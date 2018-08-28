@@ -10,10 +10,10 @@ public class DistanceModel implements LocationProvider.LocationCallback {
     private static final String TAG = "DistanceModel";
 
     private static DistanceModel instance = new DistanceModel();
-    private MainPresenterImpl presenter = MainPresenterImpl.getPresenter();
+
     private LocationProvider provider = new LocationProvider(App.getGlobalContext(), this);
 
-    private float step = 5;
+    private float step = 0;
     private float distance = 0;
     private Location startLocation;
     private Location previousLocation;
@@ -21,11 +21,11 @@ public class DistanceModel implements LocationProvider.LocationCallback {
     private DistanceModel() {
 
     }
-
     public static DistanceModel getInstance() {
         return instance;
     }
 
+    private static MainPresenterImpl presenter = MainPresenterImpl.getPresenter();
 
     @Override
     public void handleNewLocation(Location location) {
@@ -34,6 +34,8 @@ public class DistanceModel implements LocationProvider.LocationCallback {
         LatLng latLng = Utils.convertToLatLng(location);
 
         presenter.presentMarkerOnMap(latLng);
+        Utils.startService(App.getGlobalContext(), step);
+
 
         initLocation(location);
         if (previousLocation != currentLocation) {

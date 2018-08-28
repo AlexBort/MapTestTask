@@ -9,10 +9,12 @@ public class App extends Application {
     private static Context context;
     public static final String SERVICE_ID = "exampleService";
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
+       DistanceModel distanceModel = DistanceModel.getInstance();
     }
 
     public static Context getGlobalContext() {
