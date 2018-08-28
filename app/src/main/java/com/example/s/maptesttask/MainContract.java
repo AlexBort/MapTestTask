@@ -25,6 +25,8 @@ public interface MainContract {
 
         void disconnectProvider();
         void passMetersFromUser(String meters);
+
+        void startService();
         //  LatLng passLatLng(LatLng latLng);
     }
 
@@ -34,6 +36,8 @@ public interface MainContract {
         void showMarkerOnMap(LatLng latLng);
 
         void showToast(String message);
+
+       // void launchService();
         //   void requestForPermissions();
         //    void showSnackBar();
     }

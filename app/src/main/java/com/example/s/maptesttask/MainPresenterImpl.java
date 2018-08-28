@@ -1,18 +1,11 @@
 package com.example.s.maptesttask;
 
-import android.Manifest;
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-// FIXME: 28.08.2018 ЕСЛИ СТАТИЧНОСТЬ PRESENTER-A НЕ ПОНАДОБИТСЯ, ТО ПЕРЕПИШЕМ С КОНСТРУКТОРОМ, Т.К. МНОГО РАБОТАЕМ С КОНТЕКСТОМ, А ОН НАМ НУЖЕН!!
-// FIXME: 28.08.2018 УЖЕ ПРИДУМАЛ, КАК ПО-ДРУГОМУ С КОНТЕКСТОМ РАБОТАТЬ, НО ВОЗМОЖНО СТАТИЧНОСТЬ БУДЕТ ЕЩЕ НУЖНА
 public class MainPresenterImpl implements MainContract.MainPresenter, LocationProvider.LocationCallback {
 
     private static final String TAG = "MainPresenterImpl";
@@ -25,7 +18,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
     private float distance = 0;
     private Location startLocation;
     private Location previousLocation;
-    private GoogleMap mGoogleMap;
 
     private MainPresenterImpl() {
 
@@ -35,9 +27,13 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
         locationProvider = new LocationProvider(App.getGlobalContext(), this);
     }
 
-    // TODO: 26.08.2018 сделать его потокобезопасным
+
     public static MainPresenterImpl getPresenter() {
         return presenter;
+    }
+
+    private void initService() {
+        DistanceService distanceService = new DistanceService();
     }
 
     @Override
@@ -66,6 +62,11 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
         Log.e(TAG, "passMetersFromUser: " + "");
     }
 
+    @Override
+    public void startService() {
+
+    }
+
 
     @Override
     public void handleNewLocation(Location location) {
@@ -73,7 +74,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
         Log.d(TAG, location.toString());
         LatLng latLng = Utils.convertToLatLng(location);
 
-        // FIXME: 28.08.2018 и надо понять, где ставить эту строчку. В конце этого метода, или в начале!!
         mMainView.showMarkerOnMap(latLng);
 
         initLocation(location);
@@ -84,16 +84,16 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
             }
         }
 
-        mMainView.showToast("check distance (is it correct) :" + String.valueOf(step));
+        //     mMainView.showToast("check distance (is it correct) :" + String.valueOf(step));
 
         if (distance >= step) {
             startLocation = currentLocation;
             LatLng latLng1 = Utils.convertToLatLng(startLocation);
-            mMainView.showToast("distance= " + String.valueOf(distance));
+            Utils.startService(mContext,step);
+            //   mMainView.showToast("distance= " + String.valueOf(distance));
+
             distance = 0;
         }
-        // FIXME: 28.08.2018 в MainActivity тоже надо будет передать!!
-        // Utils.setMarker();
     }
 
     private float checkDistance(Location startLocation, Location endLocation) {
@@ -113,7 +113,7 @@ public class MainPresenterImpl implements MainContract.MainPresenter, LocationPr
         LatLng latLng = Utils.convertToLatLng(location);
         //   Toast.makeText(context, meters, Toast.LENGTH_SHORT).show();
         mLocation = location;
-        Utils.startService(context, Float.parseFloat(meters));
+        //     Utils.startService(context, Float.parseFloat(meters));
     }
 
     @Override

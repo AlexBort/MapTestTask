@@ -7,6 +7,8 @@
     <string name="track">TRACK DISTANCE</string>
     <string name="snackbar_text">"Please, enable geolocation if you have not yet enabled"</string>
     <string name="notif_descrip">"Start tracking specified distance"</string> // We'll track the distance specified by you
+    <string name="notif_result_">"You have achieved"</string>
+    <string name="meter">meters</string>
     <string name="notif_result">You have passed specified distance</string>
 
 </resources>
