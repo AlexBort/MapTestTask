@@ -8,25 +8,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public interface MainContract {
 
-    interface MainPresenter {
-        void clickTrackDistance(Location location, String meters, Context context);
 
-        void clickTrackDistance(LocationProvider provider, String meters);
+    interface MainPresenter {
+//        void clickTrackDistance(Location location, String meters, Context context);
+//
+//        void clickTrackDistance(LocationProvider provider, String meters);
 
         void updateLocation(Location updateLocation, String check);
 
         void setMainView(MainView mainView);
 
-        void initProvider();
 
         void setContext(Context context); // TODO: 28.08.2018 МОЖЕТ УБРАТЬ ЭТОТ МЕТОД, ПО НЕНАДОБНОСТИ!!
 
-        void connectProvider();
+        void onResume();
 
-        void disconnectProvider();
+        void onPause();
+
         void passMetersFromUser(String meters);
 
-        void startService();
+        void presentMarkerOnMap(LatLng latLng);
+
         //  LatLng passLatLng(LatLng latLng);
     }
 
@@ -37,7 +39,7 @@ public interface MainContract {
 
         void showToast(String message);
 
-       // void launchService();
+        // void launchService();
         //   void requestForPermissions();
         //    void showSnackBar();
     }

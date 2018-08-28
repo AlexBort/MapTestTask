@@ -23,17 +23,5 @@ public class App extends Application {
         return context.getResources();
     }
 
-//    private void createNotificationChannel() {
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//
-//        Notification notification = builder.
-//                setContentTitle("title").
-//                setContentText("content text ").
-//                setAutoCancel(true).
-//                setContentIntent(pendingIntent).build();
-//
-//        ContextCompat.startForegroundService();
-//    }
 
 }

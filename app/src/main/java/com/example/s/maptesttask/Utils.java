@@ -37,7 +37,7 @@ public class Utils {
     public static void startService(Context context, float meters) {
         Intent intentService = new Intent(context, DistanceService.class);
         intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-       intentService.putExtra("step", meters);
+        intentService.putExtra("step", meters);
         context.startService(intentService);
     }
 
@@ -67,8 +67,6 @@ public class Utils {
         mGoogleMap.setMaxZoomPreference(20);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
     }
-
-
 
 
     public static TrackerSettings getTrackerSettings(float meters) {

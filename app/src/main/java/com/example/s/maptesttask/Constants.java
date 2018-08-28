@@ -2,8 +2,8 @@ package com.example.s.maptesttask;
 
 public interface Constants {
 
-    // String snackMessage = App.getAppResources().getString(R.string.snackbar_text);  // snackbar_text
-    String snackMessage = App.getGlobalContext().getResources().getString(R.string.snackbar_text);
+    // String SNACK_MESSAGE = App.getAppResources().getString(R.string.snackbar_text);  // snackbar_text
+    String SNACK_MESSAGE = App.getGlobalContext().getResources().getString(R.string.snackbar_text);
     String TITLE_NOTIF = App.getGlobalContext().getResources().getString(R.string.app_name);
     String DESCRIP_NOTIF = App.getGlobalContext().getResources().getString(R.string.notif_result_);
     String METERS = App.getGlobalContext().getResources().getString(R.string.meter);

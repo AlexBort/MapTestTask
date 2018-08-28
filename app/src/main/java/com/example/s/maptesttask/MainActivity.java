@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         presenter = MainPresenterImpl.getPresenter();
         presenter.setMainView(this);
         presenter.setContext(this);
-        presenter.initProvider();
+//        presenter.initProvider();
         setUpMapIfNeeded();
 
     }
@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        presenter.connectProvider();
+        presenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.disconnectProvider();
+        presenter.onPause();
     }
 
     private void setUpMapIfNeeded() {
@@ -92,48 +92,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // FIXME: 27.08.2018  27.08.2018 если оно с такой логикой не будет работать, переделаем!!
             if (!Utils.isLocationEnabled(this))
-                Utils.makeSnackbar(rootLinear, Constants.snackMessage);
+                Utils.makeSnackbar(rootLinear, Constants.SNACK_MESSAGE);
             //  else Toast.makeText(this, "TEST DEBUG", Toast.LENGTH_SHORT).show();
             // FIXME: 27.08.2018 по-ходу оно вообще очень криво работает!!
         }
     }
-
-//    private void initLocation(Location location) {
-//        if (startLocation == null) {
-//            startLocation = location;
-//            previousLocation = location;
-//        }
-//    }
-
-//    private float checkDistance(Location startLocation, Location endLocation) {
-//        return startLocation.distanceTo(endLocation);
-//    }
-
-//    @Override
-//    public void handleNewLocation(Location location) {
-//        Location currentLocation = location;
-//        Log.d(TAG, location.toString());
-//        LatLng latLng = Utils.convertToLatLng(location);
-//        Utils.setMarker(latLng, mGoogleMap);
-////        Location startLocation = location;
-//
-//        initLocation(location);
-//        if (previousLocation != currentLocation) {
-//            if (checkDistance(previousLocation, currentLocation) >= 0.01) {
-//                distance += currentLocation.distanceTo(startLocation);
-//                previousLocation = currentLocation;
-//            }
-//        }
-//
-//        if (distance >= step) {
-//            startLocation = currentLocation;
-//            LatLng latLng1 = Utils.convertToLatLng(startLocation);
-//            Toast.makeText(App.getGlobalContext(), "check 5 meters: " + String.valueOf(distance), Toast.LENGTH_SHORT).show();
-//            distance = 0;
-//        }
-//
-//        Utils.setMarker(latLng, mGoogleMap);
-//    }
 
 
     private boolean checkLocation() {
@@ -181,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //    @Override
 //    public void showSnackBar() {
-//        Utils.makeSnackbar(rootLinear, Constants.snackMessage);
+//        Utils.makeSnackbar(rootLinear, Constants.SNACK_MESSAGE);
 //    }
 
     /**
