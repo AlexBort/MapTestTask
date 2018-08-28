@@ -41,7 +41,7 @@ public class Utils {
         context.startService(intentService);
     }
 
-    public static void hideKeyBoard(Context context, View view){
+    public static void hideKeyBoard(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
@@ -58,6 +58,7 @@ public class Utils {
         return notification;
     }
 
+    // FIXME: 28.08.2018 ПОТОМ УДАЛИМ!!
     public static void setMarker(LatLng latLng, GoogleMap mGoogleMap) {
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
@@ -66,6 +67,8 @@ public class Utils {
         mGoogleMap.setMaxZoomPreference(20);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
     }
+
+
 
 
     public static TrackerSettings getTrackerSettings(float meters) {

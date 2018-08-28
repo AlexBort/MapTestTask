@@ -170,6 +170,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    public void showMarkerOnMap(LatLng latLng) {
+        Utils.setMarker(latLng, mGoogleMap);
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
 //    @Override
 //    public void showSnackBar() {

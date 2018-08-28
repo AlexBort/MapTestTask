@@ -3,6 +3,9 @@ package com.example.s.maptesttask;
 import android.content.Context;
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 public interface MainContract {
 
     interface MainPresenter {
@@ -26,6 +29,10 @@ public interface MainContract {
 
     interface MainView {
         void showUpdateLocation(String message);
+
+        void showMarkerOnMap(LatLng latLng);
+
+        void showToast(String message);
         //   void requestForPermissions();
         //    void showSnackBar();
     }
