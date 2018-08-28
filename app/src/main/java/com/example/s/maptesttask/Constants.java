@@ -8,7 +8,7 @@ public interface Constants {
     String DESCRIP_NOTIF = App.getGlobalContext().getResources().getString(R.string.notif_descrip);
     String RESULT_NOTIF = App.getAppResources().getString(R.string.notif_result);
 
-    String INTENT_SERVICE_KEY = "distance";
+    String INTENT_SERVICE_KEY = "step";
 
     interface ACTION {
         public static String MAIN_ACTION = "com.javirock.coolservice.action.main";

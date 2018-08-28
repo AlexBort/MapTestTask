@@ -37,7 +37,7 @@ public class Utils {
     public static void startService(Context context, float meters) {
         Intent intentService = new Intent(context, DistanceService.class);
         intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-        intentService.putExtra("distance", meters);
+        intentService.putExtra("step", meters);
         context.startService(intentService);
     }
 

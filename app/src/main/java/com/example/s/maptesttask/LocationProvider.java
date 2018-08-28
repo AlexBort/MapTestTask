@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -56,7 +57,8 @@ public class LocationProvider implements
         // .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
         mContext = context;
-    }
+
+     }
 
     public void setDistance(float meters) {
         mLocationRequest.setSmallestDisplacement(meters);
@@ -76,7 +78,7 @@ public class LocationProvider implements
 
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
+        public void onConnected(@Nullable Bundle bundle) {
         Log.e(TAG, "Location services connected.");
 
         // TODO: 24.08.2018 правильно ли все таки, что я сделал эту проверку?!?! но благодаря этому приложение перестало падать!!
