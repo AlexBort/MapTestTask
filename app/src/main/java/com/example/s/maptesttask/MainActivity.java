@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
