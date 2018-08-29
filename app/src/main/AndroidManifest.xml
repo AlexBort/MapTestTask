@@ -37,9 +37,22 @@
         </activity>
 
         <service
-            android:name=".location_distance.DistanceService"
+            android:name=".location_service.DistanceService"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver
+            android:name=".location_service.BroadReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+            <intent-filter>
+                <action android:name="BroadReceiver" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".location_service.NewService"
+            android:enabled="true" />
 
     </application>
 

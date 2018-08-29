@@ -1,4 +1,4 @@
-package com.example.s.maptesttask.location_distance;
+package com.example.s.maptesttask.location_service;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.Constants;
 import com.example.s.maptesttask.MainActivity;
-import com.example.s.maptesttask.utils.LocationUtils;
 
 public class DistanceService extends Service {
 

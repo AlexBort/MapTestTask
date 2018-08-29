@@ -4,7 +4,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.example.s.maptesttask.App;
-import com.example.s.maptesttask.location_distance.LocationProvider;
+import com.example.s.maptesttask.location_service.LocationProvider;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.model.LatLng;

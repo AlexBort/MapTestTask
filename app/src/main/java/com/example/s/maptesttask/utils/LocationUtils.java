@@ -1,22 +1,7 @@
 package com.example.s.maptesttask.utils;
 
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
-import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
-import com.example.s.maptesttask.R;
-import com.example.s.maptesttask.location_distance.DistanceService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;

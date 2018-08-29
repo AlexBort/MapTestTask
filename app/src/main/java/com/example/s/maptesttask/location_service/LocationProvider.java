@@ -1,4 +1,4 @@
-package com.example.s.maptesttask.location_distance;
+package com.example.s.maptesttask.location_service;
 
 import android.Manifest;
 import android.app.Activity;

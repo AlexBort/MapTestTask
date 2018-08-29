@@ -13,7 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.s.maptesttask.R;
-import com.example.s.maptesttask.location_distance.DistanceService;
+import com.example.s.maptesttask.location_service.DistanceService;
 
 public class AndroidUtils {
 
