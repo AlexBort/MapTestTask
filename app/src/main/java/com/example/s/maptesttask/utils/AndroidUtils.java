@@ -22,10 +22,10 @@ public class AndroidUtils {
                 message, Snackbar.LENGTH_LONG).show();
     }
 
-    public static void startService(Context context, float meters) {
+    public static void startService(Context context/*, float meters*/) {
         Intent intentService = new Intent(context, DistanceService.class);
-        intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-        intentService.putExtra("step", meters);
+        //  intentService.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+      //  intentService.putExtra(Constants.INTENT_SERVICE_KEY, meters);
         context.startService(intentService);
     }
 

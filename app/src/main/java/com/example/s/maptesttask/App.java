@@ -10,13 +10,14 @@ public class App extends Application {
 
     private static Context context;
     public static final String SERVICE_ID = "exampleService";
+    public static float distance = 0;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
-       DistanceModel distanceModel = DistanceModel.getInstance();
+        DistanceModel distanceModel = DistanceModel.getInstance();
 
 
     }

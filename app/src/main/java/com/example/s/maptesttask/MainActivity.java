@@ -50,11 +50,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         initPresenter();
         setUpMapIfNeeded();
 
-        // FIXME: 29.08.2018 понять, откуда мне его вызвать
-        // FIXME: 29.08.2018 сделать так, чтобы notification срабатывал только тогда, когда реально прошли эту дистанцию!
-        // нужны ли мне вообще preferences
-        DistanceService service = new DistanceService();
-        startService(new Intent(this, service.getClass()));
+//        DistanceService service = new DistanceService();
+//        Intent intent = new Intent(this, DistanceService.class);
+//        intent.putExtra(Constants.INTENT_SERVICE_KEY, 1);
+//        startService(intent);
 
     }
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
-        Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
+    //    Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
         presenter.passMetersFromUser(meters);
         AndroidUtils.hideKeyBoard(this, view);
     }
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AndroidUtils.startService(this, 0);
+        //   AndroidUtils.startService(this, 0);
     }
 
     private void initPresenter() {

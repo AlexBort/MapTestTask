@@ -2,6 +2,7 @@ package com.example.s.maptesttask.mvp;
 
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.location_service.LocationProvider;
@@ -9,7 +10,7 @@ import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.model.LatLng;
 
-public class DistanceModel implements LocationProvider.LocationCallback {
+public class DistanceModel implements LocationProvider.LocationCallback, MainContract.DistanceCallBack {
 
     private static final String TAG = "DistanceModel";
 
@@ -21,6 +22,7 @@ public class DistanceModel implements LocationProvider.LocationCallback {
     private float distance = 0;
     private Location startLocation;
     private Location previousLocation;
+
 
     private DistanceModel() {
 
@@ -39,7 +41,6 @@ public class DistanceModel implements LocationProvider.LocationCallback {
         LatLng latLng = LocationUtils.convertToLatLng(location);
 
         presenter.presentMarkerOnMap(latLng);
-        AndroidUtils.startService(App.getGlobalContext(), step);
 
 
         initLocation(location);
@@ -52,12 +53,14 @@ public class DistanceModel implements LocationProvider.LocationCallback {
 
         //     mMainView.showToast("check distance (is it correct) :" + String.valueOf(step));
 
-        if (distance >= step) {
+        if (distance >= App.distance) {
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
-            AndroidUtils.startService(App.getGlobalContext(), step);
+            //   App.distance = step;
+            AndroidUtils.startService(App.getGlobalContext());
             // FIXME: 29.08.2018 проверить, или оно действительно обновляяет локацию на мапе!!
             presenter.presentMarkerOnMap(latLng1);
+            Toast.makeText(App.getGlobalContext(), String.valueOf(App.distance), Toast.LENGTH_SHORT).show();
             //   mMainView.showToast("distance= " + String.valueOf(distance));
             distance = 0;
         }
@@ -76,15 +79,13 @@ public class DistanceModel implements LocationProvider.LocationCallback {
         return startLocation.distanceTo(endLocation);
     }
 
-    private void initLocation(Location location) {
+    @Override
+    public void initLocation(Location location) {
         if (startLocation == null) {
             startLocation = location;
             previousLocation = location;
         }
     }
 
-    public void passMeters(float meters) {
-        step = meters;
-    }
 
 }

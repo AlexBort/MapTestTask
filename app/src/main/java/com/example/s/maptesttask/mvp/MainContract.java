@@ -8,30 +8,34 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public interface MainContract {
 
+    interface DistanceCallBack {
+        void initLocation(Location location) ;
+        }
 
-    interface MainPresenter {
 
-        void setMainView(MainView mainView);
+        interface MainPresenter {
 
-        void setContext(Context context);
+            void setMainView(MainView mainView);
 
-        void onResume();
+            void setContext(Context context);
 
-        void onPause();
+            void onResume();
 
-        void passMetersFromUser(String meters);
+            void onPause();
 
-        void presentMarkerOnMap(LatLng latLng);
+            void passMetersFromUser(String meters);
+
+            void presentMarkerOnMap(LatLng latLng);
+
+        }
+
+        interface MainView {
+
+            void showMarkerOnMap(LatLng latLng);
+
+            void showToast(String message);
+
+        }
+
 
     }
-
-    interface MainView {
-
-        void showMarkerOnMap(LatLng latLng);
-
-        void showToast(String message);
-
-    }
-
-
-}

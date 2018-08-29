@@ -13,6 +13,8 @@ public interface Constants {
     String METERS = App.getGlobalContext().getResources().getString(R.string.meter);
     String RESULT_NOTIF = App.getAppResources().getString(R.string.notif_result_);
 
+    float distance = 0;
+
     String INTENT_SERVICE_KEY = "step";
 
     String SHARED_NAME = "STEP_SHARED";

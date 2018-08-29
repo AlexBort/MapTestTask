@@ -1,9 +1,9 @@
 package com.example.s.maptesttask.mvp;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 
+import com.example.s.maptesttask.App;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MainPresenterImpl implements MainContract.MainPresenter {
@@ -47,7 +47,9 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     @Override
     public void passMetersFromUser(String meters) {
         float step = Float.parseFloat(meters);
-        distanceModel.passMeters(step);
+        App.distance = step;
+
+     //   distanceModel.passMeters(step);
         Log.e(TAG, "passMetersFromUser: " + meters);
     }
 
