@@ -10,7 +10,7 @@ import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.model.LatLng;
 
-public class DistanceModel implements LocationProvider.LocationCallback, MainContract.DistanceCallBack {
+public class DistanceModel implements LocationProvider.LocationCallback/*, MainContract.DistanceCallBack*/ {
 
     private static final String TAG = "DistanceModel";
 
@@ -42,7 +42,6 @@ public class DistanceModel implements LocationProvider.LocationCallback, MainCon
 
         presenter.presentMarkerOnMap(latLng);
 
-
         initLocation(location);
         if (previousLocation != currentLocation) {
             if (checkDistance(previousLocation, currentLocation) >= 0.01) {
@@ -51,19 +50,24 @@ public class DistanceModel implements LocationProvider.LocationCallback, MainCon
             }
         }
 
-        //     mMainView.showToast("check distance (is it correct) :" + String.valueOf(step));
+        initStep(App.distance);
 
-        if (distance >= App.distance) {
+//        Toast.makeText(App.getGlobalContext(), "ENTER!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(App.getGlobalContext(), String.valueOf(App.distance), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(App.getGlobalContext(), String.valueOf(step), Toast.LENGTH_SHORT).show();
+
+        if (distance >= step && step != 0) {
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
-            //   App.distance = step;
+          //  Toast.makeText(App.getGlobalContext(), "check" + String.valueOf(distance), Toast.LENGTH_SHORT).show();
             AndroidUtils.startService(App.getGlobalContext());
-            // FIXME: 29.08.2018 проверить, или оно действительно обновляяет локацию на мапе!!
             presenter.presentMarkerOnMap(latLng1);
-            Toast.makeText(App.getGlobalContext(), String.valueOf(App.distance), Toast.LENGTH_SHORT).show();
-            //   mMainView.showToast("distance= " + String.valueOf(distance));
             distance = 0;
         }
+    }
+
+    private void initStep(float distance) {
+        step = distance;
     }
 
     public void connectProvider() {
@@ -79,8 +83,8 @@ public class DistanceModel implements LocationProvider.LocationCallback, MainCon
         return startLocation.distanceTo(endLocation);
     }
 
-    @Override
-    public void initLocation(Location location) {
+
+    private void initLocation(Location location) {
         if (startLocation == null) {
             startLocation = location;
             previousLocation = location;

@@ -2,7 +2,6 @@ package com.example.s.maptesttask;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.example.s.maptesttask.location_service.DistanceService;
 import com.example.s.maptesttask.mvp.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
-import com.example.s.maptesttask.utils.Constants;
 import com.example.s.maptesttask.mvp.MainContract;
 import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,12 +45,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         initPresenter();
         setUpMapIfNeeded();
-
-//        DistanceService service = new DistanceService();
-//        Intent intent = new Intent(this, DistanceService.class);
-//        intent.putExtra(Constants.INTENT_SERVICE_KEY, 1);
-//        startService(intent);
-
     }
 
     @Override

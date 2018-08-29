@@ -48,8 +48,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     public void passMetersFromUser(String meters) {
         float step = Float.parseFloat(meters);
         App.distance = step;
-
-     //   distanceModel.passMeters(step);
         Log.e(TAG, "passMetersFromUser: " + meters);
     }
 
@@ -58,6 +56,6 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         mMainView.showMarkerOnMap(latLng);
     }
 
-}// TODO: 28.08.2018 END CLASS !!!
+}
 
 
