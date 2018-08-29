@@ -28,11 +28,11 @@ public class AndroidUtils {
         context.startService(intentService);
     }
 
-    public static void checkNetGps(boolean flag, Context context) {
-        if (flag) {
+    public static void gpsNetToastNotif(/*boolean flagNotif, */Context context) {
+       // if (flagNotif) {
             Toast.makeText(context, Constants.SWITCH_NOTIF, Toast.LENGTH_SHORT).show();
-            flag = false;
-        }
+            return;
+      //  }
     }
 
     public static void hideKeyBoard(Context context, View view) {

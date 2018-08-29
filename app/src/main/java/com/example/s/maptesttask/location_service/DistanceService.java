@@ -10,11 +10,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.MainActivity;
-import com.example.s.maptesttask.mvp.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.Constants;
 
@@ -24,13 +22,8 @@ import java.util.TimerTask;
 public class DistanceService extends Service {
 
 
-    public int counter = 0;
-    private int count = 0;
-    float meters = 0;
     private Timer timer;
-    // private TimerTask timerTask;
-    long oldTime = 0;
-    boolean flag = true;
+    private boolean flagNotification = true;
     private final String TAG = "DistanceService";
 
     public DistanceService(Context applicationContext) {
@@ -43,12 +36,6 @@ public class DistanceService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //    startTimer();
-        //  float meters = intent.getFloatExtra(Constants.INTENT_SERVICE_KEY, 0);
-        //    Log.e(TAG, "onStartCommand: check meters" + meters);
-        meters = App.distance;
-        Log.e(TAG, "onStartCommand: check distance" + String.valueOf(App.distance));
-        // startTimer(0);
         return START_STICKY;
     }
 
@@ -57,7 +44,7 @@ public class DistanceService extends Service {
         super.onDestroy();
         Log.e("EXIT", "onDestroy");
         stopTimerTask();
-        Intent broadcastIntent = new Intent("BroadReceiver");
+        Intent broadcastIntent = new Intent("BroadcastReceiver");
         sendBroadcast(broadcastIntent);
 
     }
@@ -74,34 +61,29 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            showNotification(App.distance, App.flag);
+            check();
+            showNotification(App.distance, App.flagNotif);
         }
     };
 
+    private void check() {
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
+                notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-//    public void startTimer(float meters) {
-//        timer = new Timer();
-//
-//        initTimerTask(meters);
-//
-//
-////        count++;
-////        if (count < 2) {
-////            Toast.makeText(this, "GOOD_jOB", Toast.LENGTH_SHORT).show();
-////        }
-//
-//        //schedule the timer, to wake up every 1 second
-//        timer.schedule(timerTask, 1000, 1000); //
-//    }
+        notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+//            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
+//                    notificationIntent, 0);
+        Notification notification = AndroidUtils.createNotification(this,
+                Constants.PREF_KEY, Constants.PREF_KEY, pendingIntent);
 
-//    public void initTimerTask(final float meters) {
-//        timerTask = new TimerTask() {
-//            public void run() {
-//                showNotification(meters);
-//            }
-//        };
-//    }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+    }
+
 
     private void showNotification(float meters, boolean flag) {
 
@@ -129,13 +111,10 @@ public class DistanceService extends Service {
             notificationManager.notify(0, notification);
         } else {
             Log.e(TAG, "showNotification:else " + " ");
-            //    Toast.makeText(this, "BAD JOB!", Toast.LENGTH_SHORT).show();
-        }
+          }
     }
 
-    /**
-     * not needed
-     */
+
     public void stopTimerTask() {
         //stop the timer, if it's not already null
         if (timer != null) {

@@ -11,7 +11,7 @@ public class App extends Application {
     private static Context context;
     public static final String SERVICE_ID = "exampleService";
     public static float distance = 0;
-    public static boolean flag = false;
+    public static boolean flagNotif = false;
 
 
     @Override

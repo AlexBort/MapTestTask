@@ -2,7 +2,6 @@ package com.example.s.maptesttask.mvp;
 
 import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.location_service.LocationProvider;
@@ -40,7 +39,7 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         Log.d(TAG, location.toString());
         LatLng latLng = LocationUtils.convertToLatLng(location);
         AndroidUtils.startService(App.getGlobalContext());
-        
+
         presenter.presentMarkerOnMap(latLng);
         initLocation(location);
         if (previousLocation != currentLocation) {
@@ -60,7 +59,7 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
             //   Toast.makeText(App.getGlobalContext(), "check" + String.valueOf(distance), Toast.LENGTH_SHORT).show();
-            App.flag = true;
+            App.flagNotif = true;
             AndroidUtils.startService(App.getGlobalContext());
             presenter.presentMarkerOnMap(latLng1);
             distance = 0;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.example.s.maptesttask.mvp.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.mvp.MainContract;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MainPresenterImpl presenter;
     @BindView(R.id.edit_distance)
     EditText editMeters;
-    private boolean flag = true;
+    //  private boolean flagNotif = true;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap = googleMap;
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
-            AndroidUtils.checkNetGps(flag, this);
+            AndroidUtils.gpsNetToastNotif(this);
         }
     }
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
-    //    Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
+        //    Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
         presenter.passMetersFromUser(meters);
         AndroidUtils.hideKeyBoard(this, view);
     }
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //   AndroidUtils.startService(this, 0);
     }
 
     private void initPresenter() {

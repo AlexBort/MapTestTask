@@ -8,11 +8,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public interface MainContract {
 
-    interface DistanceCallBack {
-       // void initLocation(Location location) ;
-        }
-
-
         interface MainPresenter {
 
             void setMainView(MainView mainView);

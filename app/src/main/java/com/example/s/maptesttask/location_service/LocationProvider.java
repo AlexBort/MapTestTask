@@ -91,6 +91,7 @@ public class LocationProvider implements
         if (location == null) {
             Log.e(TAG, "onConnected: " + "init location");
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            //   LocationServices.FusedLocationApi.
 
         } else {
             Log.e(TAG, "onConnected: " + "work with location");
