@@ -2,6 +2,7 @@ package com.example.s.maptesttask;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MainPresenterImpl presenter;
     @BindView(R.id.edit_distance)
     EditText editMeters;
+
+    public static AppCompatActivity activity;
     //  private boolean flagNotif = true;
 
     @SuppressLint("MissingPermission")
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        activity = this;
 
         initPresenter();
         setUpMapIfNeeded();
@@ -73,10 +78,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        if (checkLocation()) {
+      if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
             AndroidUtils.gpsNetToastNotif(this);
-        }
+     }
     }
 
 
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void showToast(String message) {
-      //  Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

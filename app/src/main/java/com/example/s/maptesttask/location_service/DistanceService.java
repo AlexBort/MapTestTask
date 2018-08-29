@@ -61,12 +61,12 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            check();
+            checkWorkingService();
             showNotification(App.distance, App.flagNotif);
         }
     };
 
-    private void check() {
+    private void checkWorkingService() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
                 notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -85,12 +85,12 @@ public class DistanceService extends Service {
     }
 
 
-    private void showNotification(float meters, boolean flag) {
+    private void showNotification(float meters, String flag) {
 
         Log.e(TAG, "showNotification: " + App.distance);
 
 
-        if (meters != 0 && flag == true) {
+        if (meters != 0 && flag.matches("true")) {
             //  Toast.makeText(this, "CHECK KILLED!!", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "showNotification:if " + " ");
             Intent notificationIntent = new Intent(this, MainActivity.class);

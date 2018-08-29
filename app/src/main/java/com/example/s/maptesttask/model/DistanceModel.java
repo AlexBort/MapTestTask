@@ -60,7 +60,7 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
             //   Toast.makeText(App.getGlobalContext(), "check" + String.valueOf(distance), Toast.LENGTH_SHORT).show();
-            App.flagNotif = true;
+            App.flagNotif = "true";
             AndroidUtils.startService(App.getGlobalContext());
             presenter.presentMarkerOnMap(latLng1);
             distance = 0;
