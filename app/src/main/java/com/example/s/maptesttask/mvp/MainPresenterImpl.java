@@ -56,6 +56,11 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         mMainView.showMarkerOnMap(latLng);
     }
 
+    @Override
+    public void check(String message) {
+        mMainView.showToast(message);
+    }
+
 }
 
 

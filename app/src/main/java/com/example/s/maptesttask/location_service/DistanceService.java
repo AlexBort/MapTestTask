@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.MainActivity;
+import com.example.s.maptesttask.mvp.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.Constants;
 
@@ -71,7 +72,7 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            showNotification(0);
+            showNotification(App.distance);
         }
     };
 
@@ -103,6 +104,9 @@ public class DistanceService extends Service {
     private void showNotification(float meters) {
 
         Log.e(TAG, "showNotification: " + App.distance);
+//        MainPresenterImpl presenter = MainPresenterImpl.getPresenter();
+//        String message = String.valueOf(App.distance);
+//        presenter.check(message);
 
         if (meters != 0) {
             Log.e(TAG, "showNotification:if " + " ");

@@ -27,6 +27,8 @@ public interface MainContract {
 
             void presentMarkerOnMap(LatLng latLng);
 
+            void check(String message);
+
         }
 
         interface MainView {
