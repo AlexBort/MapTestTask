@@ -30,6 +30,7 @@ public class DistanceService extends Service {
     private Timer timer;
     // private TimerTask timerTask;
     long oldTime = 0;
+    boolean flag = true;
     private final String TAG = "DistanceService";
 
     public DistanceService(Context applicationContext) {
@@ -73,7 +74,7 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            showNotification(App.distance);
+            showNotification(App.distance, App.flag);
         }
     };
 
@@ -102,20 +103,17 @@ public class DistanceService extends Service {
 //        };
 //    }
 
-    private void showNotification(float meters) {
+    private void showNotification(float meters, boolean flag) {
 
         Log.e(TAG, "showNotification: " + App.distance);
-//        MainPresenterImpl presenter = MainPresenterImpl.getPresenter();
-//        String message = String.valueOf(App.distance);
-//        presenter.check(message);
 
 
-        if (meters != 0) {
-          //  Toast.makeText(this, "CHECK KILLED!!", Toast.LENGTH_SHORT).show();
+        if (meters != 0 && flag == true) {
+            //  Toast.makeText(this, "CHECK KILLED!!", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "showNotification:if " + " ");
             Intent notificationIntent = new Intent(this, MainActivity.class);
             @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
-                    notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
