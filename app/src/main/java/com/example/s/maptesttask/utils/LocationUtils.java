@@ -7,7 +7,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import fr.quentinklein.slt.TrackerSettings;
 
 public class LocationUtils {
 
@@ -22,15 +21,6 @@ public class LocationUtils {
         mGoogleMap.addMarker(options);
         mGoogleMap.setMaxZoomPreference(20);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-    }
-
-
-    public static TrackerSettings getTrackerSettings(float meters) {
-        return new TrackerSettings()
-                .setUseGPS(true)
-                .setUseNetwork(true)
-                .setUsePassive(true)
-                .setMetersBetweenUpdates(meters);
     }
 
 //    public static boolean isLocationEnabled(Context context) {

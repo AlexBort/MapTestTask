@@ -25,6 +25,7 @@ public class DistanceModel implements LocationProvider.LocationCallback {
     private DistanceModel() {
 
     }
+
     public static DistanceModel getInstance() {
         return instance;
     }
@@ -55,7 +56,8 @@ public class DistanceModel implements LocationProvider.LocationCallback {
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
             AndroidUtils.startService(App.getGlobalContext(), step);
-            presenter.presentMarkerOnMap(latLng);
+            // FIXME: 29.08.2018 проверить, или оно действительно обновляяет локацию на мапе!!
+            presenter.presentMarkerOnMap(latLng1);
             //   mMainView.showToast("distance= " + String.valueOf(distance));
             distance = 0;
         }

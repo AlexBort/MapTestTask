@@ -2,6 +2,7 @@ package com.example.s.maptesttask;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.s.maptesttask.location_service.DistanceService;
 import com.example.s.maptesttask.mvp.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.Constants;
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         initPresenter();
         setUpMapIfNeeded();
+
+        // FIXME: 29.08.2018 понять, откуда мне его вызвать
+        // FIXME: 29.08.2018 сделать так, чтобы notification срабатывал только тогда, когда реально прошли эту дистанцию!
+        // нужны ли мне вообще preferences
+        DistanceService service = new DistanceService();
+        startService(new Intent(this, service.getClass()));
 
     }
 

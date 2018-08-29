@@ -36,10 +36,10 @@
             </intent-filter>
         </activity>
 
-        <service
+      <!--  <service
             android:name=".location_service.DistanceService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true" />-->
 
         <receiver
             android:name=".location_service.BroadReceiver"
@@ -51,7 +51,7 @@
             </intent-filter>
         </receiver>
         <service
-            android:name=".location_service.NewService"
+            android:name=".location_service.DistanceService"
             android:enabled="true" />
 
     </application>

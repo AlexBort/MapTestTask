@@ -10,8 +10,7 @@ public class BroadReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e(BroadReceiver.class.getSimpleName(), "Service Stops! ");
-
-        context.startService(new Intent(context, NewService.class));
+        context.startService(new Intent(context, DistanceService.class));
     }
 
 }
