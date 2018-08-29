@@ -37,7 +37,7 @@
         </activity>
 
         <service
-            android:name=".DistanceService"
+            android:name=".location_distance.DistanceService"
             android:enabled="true"
             android:exported="true" />
 

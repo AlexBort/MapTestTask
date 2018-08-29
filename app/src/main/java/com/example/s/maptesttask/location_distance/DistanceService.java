@@ -1,4 +1,4 @@
-package com.example.s.maptesttask;
+package com.example.s.maptesttask.location_distance;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -7,14 +7,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import fr.quentinklein.slt.LocationTracker;
+import com.example.s.maptesttask.utils.AndroidUtils;
+import com.example.s.maptesttask.utils.Constants;
+import com.example.s.maptesttask.MainActivity;
+import com.example.s.maptesttask.utils.LocationUtils;
 
 public class DistanceService extends Service {
 
@@ -35,7 +36,7 @@ public class DistanceService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Toast.makeText(this, "onBind Called", Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, "onBind Called", Toast.LENGTH_SHORT).show();
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -49,9 +50,6 @@ public class DistanceService extends Service {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Log.e(TAG, "onStartCommand: " + "Received Start Foreground Intent");
 
-//            temp++;
-//            if (temp == 1)
-//                Toast.makeText(this, "Service Started!", Toast.LENGTH_SHORT).show();
             float meters = intent.getFloatExtra(Constants.INTENT_SERVICE_KEY, 0);
             showNotification(meters);
 
@@ -79,31 +77,32 @@ public class DistanceService extends Service {
         if (meters != 0)
             metersStr = String.valueOf(meters);
 
-        Notification notification = Utils.createNotification(this,
+        Notification notification = AndroidUtils.createNotification(this,
                 Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + metersStr +
                         Constants.METERS, pendingIntent);
 
-        // TODO: 28.08.2018 ЭТА ШТУКА РАЗБУДИТ SERVICE!
-        // TODO: 28.08.2018 момент правда в том, что расчет должен быть где-то здесь!!
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
 
         //  Toast.makeText(this, App.SERVICE_ID, Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "WORK IN BACKGROUND!", Toast.LENGTH_SHORT).show();
 
+     //   Toast.makeText(this, String.valueOf(Constants.STEP), Toast.LENGTH_SHORT).show();
 
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        if (Constants.STEP != 0) {
 
-        Notification notification2 = Utils.createNotification(this,
-                Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + metersStr +
-                        Constants.METERS, pendingIntent);
+            Notification notification2 = AndroidUtils.createNotification(this,
+                    Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + metersStr +
+                            Constants.METERS, pendingIntent);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notification2);
+        }
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification2);
 
     }
 
@@ -111,8 +110,6 @@ public class DistanceService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // TODO: 25.08.2018  надо понять, надо ли оно здесь
-        //    stopSelf();
-    }
+       }
 
 }

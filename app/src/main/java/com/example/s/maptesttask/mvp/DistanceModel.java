@@ -1,8 +1,12 @@
-package com.example.s.maptesttask;
+package com.example.s.maptesttask.mvp;
 
 import android.location.Location;
 import android.util.Log;
 
+import com.example.s.maptesttask.App;
+import com.example.s.maptesttask.location_distance.LocationProvider;
+import com.example.s.maptesttask.utils.AndroidUtils;
+import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.model.LatLng;
 
 public class DistanceModel implements LocationProvider.LocationCallback {
@@ -31,10 +35,10 @@ public class DistanceModel implements LocationProvider.LocationCallback {
     public void handleNewLocation(Location location) {
         Location currentLocation = location;
         Log.d(TAG, location.toString());
-        LatLng latLng = Utils.convertToLatLng(location);
+        LatLng latLng = LocationUtils.convertToLatLng(location);
 
         presenter.presentMarkerOnMap(latLng);
-        Utils.startService(App.getGlobalContext(), step);
+        AndroidUtils.startService(App.getGlobalContext(), step);
 
 
         initLocation(location);
@@ -49,11 +53,10 @@ public class DistanceModel implements LocationProvider.LocationCallback {
 
         if (distance >= step) {
             startLocation = currentLocation;
-            LatLng latLng1 = Utils.convertToLatLng(startLocation);
-            Utils.startService(App.getGlobalContext(), step);
+            LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
+            AndroidUtils.startService(App.getGlobalContext(), step);
             presenter.presentMarkerOnMap(latLng);
             //   mMainView.showToast("distance= " + String.valueOf(distance));
-
             distance = 0;
         }
     }

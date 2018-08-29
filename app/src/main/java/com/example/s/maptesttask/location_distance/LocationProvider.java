@@ -1,11 +1,10 @@
-package com.example.s.maptesttask;
+package com.example.s.maptesttask.location_distance;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,10 +28,6 @@ public class LocationProvider implements
 
     public static final String TAG = LocationProvider.class.getSimpleName();
 
-    /*
-     * Define a request code to send to Google Play services
-     * This code is returned in Activity.onActivityResult
-     */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private LocationCallback mLocationCallback;
@@ -58,11 +53,11 @@ public class LocationProvider implements
 
         mContext = context;
 
-     }
-
-    public void setDistance(float meters) {
-        mLocationRequest.setSmallestDisplacement(meters);
     }
+
+//    public void setDistance(float meters) {
+//        mLocationRequest.setSmallestDisplacement(meters);
+//    }
 
 
     public void connect() {
@@ -78,10 +73,9 @@ public class LocationProvider implements
 
 
     @Override
-        public void onConnected(@Nullable Bundle bundle) {
+    public void onConnected(@Nullable Bundle bundle) {
         Log.e(TAG, "Location services connected.");
 
-        // TODO: 24.08.2018 правильно ли все таки, что я сделал эту проверку?!?! но благодаря этому приложение перестало падать!!
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -96,8 +90,6 @@ public class LocationProvider implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             Log.e(TAG, "onConnected: " + "init location");
-
-            // FIXME: 24.08.2018 error: Client must have ACCESS_FINE_LOCATION permission to request PRIORITY_HIGH_ACCURACY locations.
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
         } else {
@@ -120,10 +112,7 @@ public class LocationProvider implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
+         *request to google play
          */
         if (connectionResult.hasResolution() && mContext instanceof Activity) {
             try {

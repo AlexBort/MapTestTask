@@ -10,18 +10,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.example.s.maptesttask.mvp.MainPresenterImpl;
+import com.example.s.maptesttask.utils.AndroidUtils;
+import com.example.s.maptesttask.utils.Constants;
+import com.example.s.maptesttask.mvp.MainContract;
+import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-// TODO: 28.08.2018 там, где LocationProvider, использоваться обязательно Presenter. Там где карта ставится, можно в MainActivity всё!
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
         MainContract.MainView {
@@ -30,17 +30,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String TAG = "MainActivity";
     private GoogleMap mGoogleMap;
-    private LocationProvider locationProvider;
-    SupportMapFragment supportMapFragment;
-    private FusedLocationProviderClient providerClient;
+    private SupportMapFragment supportMapFragment;
     @BindView(R.id.root_linear)
     LinearLayout rootLinear;
     private MainPresenterImpl presenter;
-    private MainPresenterImpl presenterUpdate;
     @BindView(R.id.edit_distance)
     EditText editMeters;
-    // LocationRequest locationRequest;
-
+    private boolean flag = true;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -48,13 +44,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        if (GoogleServiceUtils.isGoogleServiceAvailable(this)) {
-//            GoogleServiceUtils.getLocationPermission(this);
-//        }
-        presenter = MainPresenterImpl.getPresenter();
-        presenter.setMainView(this);
-        presenter.setContext(this);
-//        presenter.initProvider();
+
+        initPresenter();
         setUpMapIfNeeded();
 
     }
@@ -73,12 +64,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
         if (mGoogleMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
             supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             supportMapFragment.getMapAsync(this);
-            // Check if we were successful in obtaining the map.
         }
     }
 
@@ -89,19 +77,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap = googleMap;
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
-
-            // FIXME: 27.08.2018  27.08.2018 если оно с такой логикой не будет работать, переделаем!!
-            if (!Utils.isLocationEnabled(this))
-                Utils.makeSnackbar(rootLinear, Constants.SNACK_MESSAGE);
-            //  else Toast.makeText(this, "TEST DEBUG", Toast.LENGTH_SHORT).show();
-            // FIXME: 27.08.2018 по-ходу оно вообще очень криво работает!!
+            AndroidUtils.checkNetGps(flag, this);
         }
     }
 
 
     private boolean checkLocation() {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (Utils.isPermissionGranted(getApplicationContext(), PERMISSIONS_LOCATION)) {
+            if (AndroidUtils.isPermissionGranted(getApplicationContext(), PERMISSIONS_LOCATION)) {
                 // Permission Granted Already
                 return true;
             }
@@ -114,26 +97,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    // FIXME: 28.08.2018 НАПИШЕМ ЛОГИКУ ПЕРЕНОСА LOACTION_PROVIDER-A В PRESENTER, И ОТОБРАЖЕНИЕ НА КАРТЕ В ,AIN_ACTIVITY,
-    // FIXME: 28.08.2018 ПОСМОТРИМ, КАК ОНО РАБОТАЕТ (ТРЕКАЕТ ДИСТАНЦИЮ), И ТОГДА ПЕРЕЙДЕМ К ОБРАБОТКЕ КНОПКИ
-    // FIXME: 28.08.2018 И СООТВЕТСТВЕННО К СЕРВИСУ!!
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
+        Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
         presenter.passMetersFromUser(meters);
-        Utils.hideKeyBoard(this, view);
-      //  presenter.clickTrackDistance(locationProvider, meters);
-        //   locationProvider.setDistance(Float.parseFloat(meters));
+        AndroidUtils.hideKeyBoard(this, view);
     }
 
-    // метод презентера!!
-    @Override
-    public void showUpdateLocation(String message) {
-
-    }
 
     @Override
     public void showMarkerOnMap(LatLng latLng) {
-        Utils.setMarker(latLng, mGoogleMap);
+        LocationUtils.setMarker(latLng, mGoogleMap);
     }
 
     @Override
@@ -141,21 +115,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AndroidUtils.startService(this, 0);
+    }
 
-//    @Override
-//    public void showSnackBar() {
-//        Utils.makeSnackbar(rootLinear, Constants.SNACK_MESSAGE);
-//    }
-
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p>
-     * This should only be called once and when we are sure that mGoogleMap is not null.
-     */
-    private void setUpMap() {
-        LatLng latLng = new LatLng(0, 0);
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    private void initPresenter() {
+        presenter = MainPresenterImpl.getPresenter();
+        presenter.setMainView(this);
+        presenter.setContext(this);
     }
 }
