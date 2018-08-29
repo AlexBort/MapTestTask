@@ -1,9 +1,11 @@
-package com.example.s.maptesttask.mvp;
+package com.example.s.maptesttask.presenter;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.example.s.maptesttask.App;
+import com.example.s.maptesttask.model.DistanceModel;
+import com.example.s.maptesttask.mvp.MainContract;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MainPresenterImpl implements MainContract.MainPresenter {

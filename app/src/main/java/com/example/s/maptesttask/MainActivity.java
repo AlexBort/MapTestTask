@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.s.maptesttask.mvp.MainPresenterImpl;
+import com.example.s.maptesttask.presenter.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.mvp.MainContract;
 import com.example.s.maptesttask.utils.LocationUtils;

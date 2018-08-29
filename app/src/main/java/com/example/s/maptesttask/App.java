@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.example.s.maptesttask.mvp.DistanceModel;
+import com.example.s.maptesttask.model.DistanceModel;
 
 public class App extends Application {
 
