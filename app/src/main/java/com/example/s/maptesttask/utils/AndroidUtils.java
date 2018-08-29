@@ -23,7 +23,8 @@ public class AndroidUtils {
     }
 
     public static void startService(Context context/*, float meters*/) {
-        Intent intentService = new Intent(context, DistanceService.class);
+        DistanceService service = new DistanceService(context);
+        Intent intentService = new Intent(context, service.getClass());
         context.startService(intentService);
     }
 

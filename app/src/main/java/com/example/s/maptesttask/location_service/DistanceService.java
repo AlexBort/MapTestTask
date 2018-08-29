@@ -1,5 +1,6 @@
 package com.example.s.maptesttask.location_service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -31,10 +32,10 @@ public class DistanceService extends Service {
     long oldTime = 0;
     private final String TAG = "DistanceService";
 
-//    public DistanceService(Context applicationContext) {
-//        super();
-//        Log.i("HERE", "service!");
-//    }
+    public DistanceService(Context applicationContext) {
+        super();
+        Log.i("HERE", "service!");
+    }
 
     public DistanceService() {
     }
@@ -108,22 +109,26 @@ public class DistanceService extends Service {
 //        String message = String.valueOf(App.distance);
 //        presenter.check(message);
 
+
         if (meters != 0) {
+          //  Toast.makeText(this, "CHECK KILLED!!", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "showNotification:if " + " ");
-            //    PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, Intent.FLAG_ACTIVITY_NEW_TASK);
-//            Intent notificationIntent = new Intent(this, MainActivity.class);
-//            notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-//            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
+                    notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+            notificationIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
 //            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
 //                    notificationIntent, 0);
-//            Notification notification = AndroidUtils.createNotification(this,
-//                    Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + String.valueOf(meters) +
-//                            Constants.METERS, pendingIntent);
-//
-//            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            notificationManager.notify(0, notification);
+            Notification notification = AndroidUtils.createNotification(this,
+                    Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + String.valueOf(meters) + " " +
+                            Constants.METERS, pendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notification);
         } else {
             Log.e(TAG, "showNotification:else " + " ");
             //    Toast.makeText(this, "BAD JOB!", Toast.LENGTH_SHORT).show();

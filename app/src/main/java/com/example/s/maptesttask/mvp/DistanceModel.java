@@ -41,7 +41,6 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         LatLng latLng = LocationUtils.convertToLatLng(location);
 
         presenter.presentMarkerOnMap(latLng);
-        AndroidUtils.startService(App.getGlobalContext());
         initLocation(location);
         if (previousLocation != currentLocation) {
             if (checkDistance(previousLocation, currentLocation) >= 0.01) {
@@ -59,7 +58,7 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         if (distance >= step && step != 0) {
             startLocation = currentLocation;
             LatLng latLng1 = LocationUtils.convertToLatLng(startLocation);
-            Toast.makeText(App.getGlobalContext(), "check" + String.valueOf(distance), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(App.getGlobalContext(), "check" + String.valueOf(distance), Toast.LENGTH_SHORT).show();
             AndroidUtils.startService(App.getGlobalContext());
             presenter.presentMarkerOnMap(latLng1);
             distance = 0;
