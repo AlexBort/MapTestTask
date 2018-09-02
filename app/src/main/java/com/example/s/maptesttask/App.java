@@ -26,9 +26,10 @@ public class App extends Application {
         super.onCreate();
         context = this;
         DistanceModel distanceModel = DistanceModel.getInstance();
+        distanceModel.connectProvider();
         //    activity = MainActivity.class.getClass().getComponentType().;
 
-     //   boolean checkPermission = checkLocation();
+        //   boolean checkPermission = checkLocation();
 
     }
 

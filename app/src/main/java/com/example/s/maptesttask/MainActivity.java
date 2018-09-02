@@ -2,10 +2,10 @@ package com.example.s.maptesttask;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         activity = this;
 
         initPresenter();
+    //    presenter.connectLocation();
         setUpMapIfNeeded();
     }
 
@@ -57,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        presenter.onResume();
+  //      presenter.connectLocation();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.onPause();
+        //   presenter.onPause();
     }
 
     private void setUpMapIfNeeded() {
@@ -78,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-      if (checkLocation()) {
+        if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
             AndroidUtils.gpsNetToastNotif(this);
-     }
+        }
     }
 
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void trackDistance(View view) {
         String meters = editMeters.getText().toString();
-        //    Constants.PREFERENCES.edit().putFloat(Constants.PREF_KEY, Float.parseFloat(meters)).apply();
+        //    Constants.PREFERENCES.edit().putFloat(Constants.FLOAT_KEY, Float.parseFloat(meters)).apply();
         presenter.passMetersFromUser(meters);
         AndroidUtils.hideKeyBoard(this, view);
     }
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void showMarkerOnMap(LatLng latLng) {
         LocationUtils.setMarker(latLng, mGoogleMap);
+        Toast.makeText(MainActivity.this, String.valueOf(latLng.latitude), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -121,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
         super.onDestroy();
+     //   presenter.connectLocation();
+//        Log.e(TAG, "connectProvider: "+ "ЗАПУСТИЛ провайдер!!" );
+//        Toast.makeText(MainActivity.this, "sadsdfs", Toast.LENGTH_SHORT).show();
     }
 
     private void initPresenter() {

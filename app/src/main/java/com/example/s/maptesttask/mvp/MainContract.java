@@ -14,7 +14,7 @@ public interface MainContract {
 
             void setContext(Context context);
 
-            void onResume();
+            void connectLocation();
 
             void onPause();
 

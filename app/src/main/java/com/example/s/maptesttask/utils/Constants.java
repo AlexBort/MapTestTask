@@ -18,9 +18,9 @@ public interface Constants {
     String INTENT_SERVICE_KEY = "step";
 
     String SHARED_NAME = "STEP_SHARED";
-    String PREF_KEY = "STEP";
+    String FLOAT_KEY = "STEP";
     SharedPreferences PREFERENCES = App.getGlobalContext().getSharedPreferences(SHARED_NAME, 0);
-    Float STEP = PREFERENCES.getFloat(PREF_KEY, 0);
+    Float STEP = PREFERENCES.getFloat(FLOAT_KEY, 0);
 
 
     interface ACTION {

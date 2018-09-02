@@ -78,7 +78,7 @@ public class DistanceService extends Service {
 //            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
 //                    notificationIntent, 0);
         Notification notification = AndroidUtils.createNotification(this,
-                Constants.PREF_KEY, Constants.PREF_KEY, pendingIntent);
+                Constants.FLOAT_KEY, Constants.FLOAT_KEY, pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);

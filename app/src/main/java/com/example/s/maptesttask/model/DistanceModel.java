@@ -7,6 +7,7 @@ import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.location_service.LocationProvider;
 import com.example.s.maptesttask.presenter.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
+import com.example.s.maptesttask.utils.Constants;
 import com.example.s.maptesttask.utils.LocationUtils;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -14,9 +15,11 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
 
     private static final String TAG = "DistanceModel";
 
+    Float STEP = Constants.PREFERENCES.getFloat(Constants.FLOAT_KEY, 0);
+
     private static DistanceModel instance = new DistanceModel();
 
-    private LocationProvider provider = new LocationProvider(App.getGlobalContext(), this);
+    private LocationProvider locationProvider = new LocationProvider(App.getGlobalContext(), this);
 
     private float step = 0;
     private float distance = 0;
@@ -39,7 +42,10 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         Location currentLocation = location;
         Log.d(TAG, location.toString());
         LatLng latLng = LocationUtils.convertToLatLng(location);
-        AndroidUtils.startService(App.getGlobalContext());
+        //   AndroidUtils.startService(App.getGlobalContext());
+
+        Log.e(TAG, "handleNewLocation: check location longi" + String.valueOf(location.getLongitude()));
+
 
         presenter.presentMarkerOnMap(latLng);
         initLocation(location);
@@ -50,11 +56,8 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
             }
         }
 
-        initStep(App.distance);
 
-//        Toast.makeText(App.getGlobalContext(), "ENTER!", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(App.getGlobalContext(), String.valueOf(App.distance), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(App.getGlobalContext(), String.valueOf(step), Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "handleNewLocation: check step:" + String.valueOf(step));
 
         if (distance >= step && step != 0) {
             startLocation = currentLocation;
@@ -67,16 +70,14 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         }
     }
 
-    private void initStep(float distance) {
-        step = distance;
-    }
 
     public void connectProvider() {
-        provider.connect();
+        locationProvider.connect();
+
     }
 
     public void disconnectProvider() {
-        provider.disconnect();
+       // locationProvider.disconnect();
     }
 
 
@@ -93,4 +94,10 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
     }
 
 
+    public void initStep(float stepUser) {
+        step = stepUser;
+        Constants.PREFERENCES.edit().putFloat(Constants.FLOAT_KEY, stepUser).commit();
+        // apply
+        Log.e(TAG, "specifyDistance: check passing " + stepUser);
+    }
 }

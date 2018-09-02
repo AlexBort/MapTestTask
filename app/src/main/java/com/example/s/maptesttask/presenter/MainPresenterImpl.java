@@ -37,7 +37,7 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     }
 
     @Override
-    public void onResume() {
+    public void connectLocation() {
         distanceModel.connectProvider();
     }
 
@@ -50,6 +50,7 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     public void passMetersFromUser(String meters) {
         float step = Float.parseFloat(meters);
         App.distance = step;
+        distanceModel.initStep(step);
         Log.e(TAG, "passMetersFromUser: " + meters);
     }
 
