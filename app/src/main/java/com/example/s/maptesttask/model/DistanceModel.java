@@ -58,7 +58,7 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
         }
 
         // FIXME: 02.09.2018 потом уберем!!
-        AndroidUtils.startService(App.getGlobalContext());
+  //      AndroidUtils.startService(App.getGlobalContext());
 
 
         if (distance >= step && step != 0) {

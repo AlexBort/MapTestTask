@@ -90,7 +90,7 @@ public class DistanceService extends Service {
     private void showNotification() {
 
         step = App.PREFERENCES.getFloat(App.FLOAT_KEY, 0);
-        checkWorkingService(String.valueOf(step));
+//        checkWorkingService(String.valueOf(step));
         //   MainPresenterImpl.getPresenter().showToast(String.valueOf(step));
 
         if (step != 0) {
