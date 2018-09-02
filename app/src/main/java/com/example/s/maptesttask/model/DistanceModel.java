@@ -13,11 +13,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Timer;
 
-public class DistanceModel implements LocationProvider.LocationCallback/*, MainContract.DistanceCallBack*/ {
+public class DistanceModel implements LocationProvider.LocationCallback {
 
     private static final String TAG = "DistanceModel";
 
-    //   Float STEP = Constants.PREFERENCES.getFloat(Constants.FLOAT_KEY, 0);
 
     private static DistanceModel instance = new DistanceModel();
 
@@ -56,10 +55,6 @@ public class DistanceModel implements LocationProvider.LocationCallback/*, MainC
                 previousLocation = currentLocation;
             }
         }
-
-        // FIXME: 02.09.2018 потом уберем!!
-  //      AndroidUtils.startService(App.getGlobalContext());
-
 
         if (distance >= step && step != 0) {
             startLocation = currentLocation;

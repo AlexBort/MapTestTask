@@ -26,7 +26,6 @@ public class DistanceService extends Service {
 
     private float step = 0;
     private Timer timer;
-    private boolean flagNotification = true;
     private final String TAG = "DistanceService";
 
     public DistanceService(Context applicationContext) {
@@ -65,7 +64,7 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            //  checkWorkingService();
+          // checkWorkingService();
             showNotification();
         }
     };
@@ -90,8 +89,6 @@ public class DistanceService extends Service {
     private void showNotification() {
 
         step = App.PREFERENCES.getFloat(App.FLOAT_KEY, 0);
-//        checkWorkingService(String.valueOf(step));
-        //   MainPresenterImpl.getPresenter().showToast(String.valueOf(step));
 
         if (step != 0) {
             Intent notificationIntent = new Intent(this, MainActivity.class);

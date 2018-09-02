@@ -14,11 +14,11 @@ public interface MainContract {
 
             void setContext(Context context);
 
-            void showToast(String s);
-
-            void connectLocation();
-
             void onPause();
+
+            void onCreate();
+
+            void onResume();
 
             void passMetersFromUser(String meters);
 
@@ -30,9 +30,6 @@ public interface MainContract {
         interface MainView {
 
             void showMarkerOnMap(LatLng latLng);
-
-            void showToast(String message);
-
         }
 
 

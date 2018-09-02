@@ -55,10 +55,6 @@ public class LocationProvider implements
 
     }
 
-//    public void setDistance(float meters) {
-//        mLocationRequest.setSmallestDisplacement(meters);
-//    }
-
 
     public void connect() {
         mGoogleApiClient.connect();

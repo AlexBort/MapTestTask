@@ -36,19 +36,20 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
         mContext = context;
     }
 
-    @Override
-    public void showToast(String TAG) {
-        mMainView.showToast(TAG);
-    }
-
-    @Override
-    public void connectLocation() {
-        distanceModel.connectProvider();
-    }
 
     @Override
     public void onPause() {
         distanceModel.disconnectProvider();
+    }
+
+    @Override
+    public void onCreate() {
+        distanceModel.connectProvider();
+    }
+
+    @Override
+    public void onResume() {
+        distanceModel.connectProvider();
     }
 
     @Override

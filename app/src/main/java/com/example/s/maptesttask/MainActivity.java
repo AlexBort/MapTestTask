@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MainPresenterImpl presenter;
     @BindView(R.id.edit_distance)
     EditText editMeters;
-
     public static AppCompatActivity activity;
-    //  private boolean flagNotif = true;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         initPresenter();
         setUpMapIfNeeded();
-        presenter.connectLocation();
+        presenter.onCreate();
 
     }
 
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        presenter.connectLocation();
+        presenter.onResume();
     }
 
     @Override
@@ -82,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap = googleMap;
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
-            AndroidUtils.gpsNetToastNotif(this);
         }
+        AndroidUtils.gpsNetToastNotif(this);
     }
 
 
@@ -115,17 +113,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.connectLocation();
-        //   presenter.connectLocation();
-//        Log.e(TAG, "connectProvider: "+ "ЗАПУСТИЛ провайдер!!" );
-//        Toast.makeText(MainActivity.this, "sadsdfs", Toast.LENGTH_SHORT).show();
+ //       presenter.connectLocation();
     }
 
     private void initPresenter() {
