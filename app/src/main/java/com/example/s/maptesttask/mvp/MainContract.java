@@ -14,6 +14,8 @@ public interface MainContract {
 
             void setContext(Context context);
 
+            void showToast(String s);
+
             void connectLocation();
 
             void onPause();

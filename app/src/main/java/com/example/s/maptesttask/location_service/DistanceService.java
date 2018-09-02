@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.MainActivity;
+import com.example.s.maptesttask.presenter.MainPresenterImpl;
 import com.example.s.maptesttask.utils.AndroidUtils;
 import com.example.s.maptesttask.utils.Constants;
 
@@ -22,6 +24,7 @@ import java.util.TimerTask;
 public class DistanceService extends Service {
 
 
+    private float step = 0;
     private Timer timer;
     private boolean flagNotification = true;
     private final String TAG = "DistanceService";
@@ -54,6 +57,7 @@ public class DistanceService extends Service {
         super.onCreate();
         timer = new Timer();
 
+
         timer.schedule(timerTask, 5000, 5000);
 
     }
@@ -61,12 +65,12 @@ public class DistanceService extends Service {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            checkWorkingService();
-            showNotification(App.distance, App.flagNotif);
+            //  checkWorkingService();
+            showNotification();
         }
     };
 
-    private void checkWorkingService() {
+    private void checkWorkingService(String steps) {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
                 notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -75,24 +79,21 @@ public class DistanceService extends Service {
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-//            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
-//                    notificationIntent, 0);
         Notification notification = AndroidUtils.createNotification(this,
-                Constants.FLOAT_KEY, Constants.FLOAT_KEY, pendingIntent);
+                Constants.TITLE_CHECK_SERVICE, steps, pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
 
 
-    private void showNotification(float meters, String flag) {
+    private void showNotification() {
 
-        Log.e(TAG, "showNotification: " + App.distance);
+        step = App.PREFERENCES.getFloat(App.FLOAT_KEY, 0);
+        checkWorkingService(String.valueOf(step));
+        //   MainPresenterImpl.getPresenter().showToast(String.valueOf(step));
 
-
-        if (meters != 0 && flag.matches("true")) {
-            //  Toast.makeText(this, "CHECK KILLED!!", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "showNotification:if " + " ");
+        if (step != 0) {
             Intent notificationIntent = new Intent(this, MainActivity.class);
             @SuppressLint("WrongConstant") PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0,
                     notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -101,17 +102,15 @@ public class DistanceService extends Service {
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-//            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
-//                    notificationIntent, 0);
             Notification notification = AndroidUtils.createNotification(this,
-                    Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + String.valueOf(meters) + " " +
+                    Constants.TITLE_NOTIF, Constants.RESULT_NOTIF + " " + String.valueOf(step) + " " +
                             Constants.METERS, pendingIntent);
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
-        } else {
-            Log.e(TAG, "showNotification:else " + " ");
-          }
+
+            App.PREFERENCES.edit().putFloat(App.FLOAT_KEY, 0).commit();
+        }
     }
 
 

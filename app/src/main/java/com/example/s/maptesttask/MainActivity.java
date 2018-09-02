@@ -50,21 +50,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         activity = this;
 
         initPresenter();
-    //    presenter.connectLocation();
         setUpMapIfNeeded();
+        presenter.connectLocation();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-  //      presenter.connectLocation();
+        presenter.connectLocation();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //   presenter.onPause();
+        presenter.onPause();
     }
 
     private void setUpMapIfNeeded() {
@@ -101,9 +102,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    public void trackDistance(View view) {
+    public void clickTrackerDistance(View view) {
         String meters = editMeters.getText().toString();
-        //    Constants.PREFERENCES.edit().putFloat(Constants.FLOAT_KEY, Float.parseFloat(meters)).apply();
         presenter.passMetersFromUser(meters);
         AndroidUtils.hideKeyBoard(this, view);
     }
@@ -112,18 +112,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void showMarkerOnMap(LatLng latLng) {
         LocationUtils.setMarker(latLng, mGoogleMap);
-        Toast.makeText(MainActivity.this, String.valueOf(latLng.latitude), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToast(String message) {
-        //  Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-     //   presenter.connectLocation();
+        presenter.connectLocation();
+        //   presenter.connectLocation();
 //        Log.e(TAG, "connectProvider: "+ "ЗАПУСТИЛ провайдер!!" );
 //        Toast.makeText(MainActivity.this, "sadsdfs", Toast.LENGTH_SHORT).show();
     }

@@ -19,8 +19,8 @@ public interface Constants {
 
     String SHARED_NAME = "STEP_SHARED";
     String FLOAT_KEY = "STEP";
-    SharedPreferences PREFERENCES = App.getGlobalContext().getSharedPreferences(SHARED_NAME, 0);
-    Float STEP = PREFERENCES.getFloat(FLOAT_KEY, 0);
+    String TITLE_CHECK_SERVICE = "DISTANCE SERVICE";
+    String SERVICE_DESCRIP = "SERVICE IS LAUNCHED";
 
 
     interface ACTION {

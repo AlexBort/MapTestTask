@@ -26,7 +26,7 @@
         <Button
             android:id="@+id/track"
             android:layout_width="match_parent"
-            android:onClick="trackDistance"
+            android:onClick="clickTrackerDistance"
             android:layout_height="wrap_content"
             android:text="@string/track"
             tools:ignore="OnClick" /><!-- android:layout_below="@+id/edit_distance"-->

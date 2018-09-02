@@ -37,6 +37,11 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     }
 
     @Override
+    public void showToast(String TAG) {
+        mMainView.showToast(TAG);
+    }
+
+    @Override
     public void connectLocation() {
         distanceModel.connectProvider();
     }
@@ -49,14 +54,13 @@ public class MainPresenterImpl implements MainContract.MainPresenter {
     @Override
     public void passMetersFromUser(String meters) {
         float step = Float.parseFloat(meters);
-        App.distance = step;
         distanceModel.initStep(step);
-        Log.e(TAG, "passMetersFromUser: " + meters);
     }
 
     @Override
     public void presentMarkerOnMap(LatLng latLng) {
         mMainView.showMarkerOnMap(latLng);
+
     }
 
 
