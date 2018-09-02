@@ -12,24 +12,23 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/marg_10"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/edit_distance"
             android:layout_width="match_parent"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/marg_5"
             android:inputType="number"
             android:layout_height="wrap_content"
-            android:hint="@string/hint" /><!-- android:layout_below="@+id/map"-->
-
+            android:hint="@string/hint" />
         <Button
             android:id="@+id/track"
             android:layout_width="match_parent"
             android:onClick="clickTrackerDistance"
             android:layout_height="wrap_content"
             android:text="@string/track"
-            tools:ignore="OnClick" /><!-- android:layout_below="@+id/edit_distance"-->
+            tools:ignore="OnClick" />
 
     </LinearLayout>
 

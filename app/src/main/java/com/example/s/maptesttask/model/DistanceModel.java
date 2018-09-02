@@ -2,7 +2,6 @@ package com.example.s.maptesttask.model;
 
 import android.location.Location;
 import android.util.Log;
-
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.location_service.LocationProvider;
 import com.example.s.maptesttask.presenter.MainPresenterImpl;

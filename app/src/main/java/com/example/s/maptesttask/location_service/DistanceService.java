@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.MainActivity;
 import com.example.s.maptesttask.presenter.MainPresenterImpl;
@@ -30,7 +28,7 @@ public class DistanceService extends Service {
 
     public DistanceService(Context applicationContext) {
         super();
-        Log.i("HERE", "service!");
+        Log.i(TAG, "service!");
     }
 
     public DistanceService() {
@@ -44,7 +42,7 @@ public class DistanceService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("EXIT", "onDestroy");
+        Log.e(TAG, "onDestroy");
         stopTimerTask();
         Intent broadcastIntent = new Intent("BroadcastReceiver");
         sendBroadcast(broadcastIntent);
