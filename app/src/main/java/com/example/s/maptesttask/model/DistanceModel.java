@@ -12,6 +12,12 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Timer;
 
+
+/*In the beginning i tried to track the location using DistanceModel.
+ But for more convenient work (switching connection and work in background)
+  i passed logic of tracking location into the Service */
+
+
 public class DistanceModel implements LocationProvider.LocationCallback {
 
     private static final String TAG = "DistanceModel";
@@ -64,13 +70,6 @@ public class DistanceModel implements LocationProvider.LocationCallback {
             distance = 0;
         }
     }
-
-    public void switchProvider() {
-        timer = new Timer();
-        connectProvider();
-        disconnectProvider();
-    }
-
 
     public void connectProvider() {
         locationProvider.connect();

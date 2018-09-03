@@ -14,6 +14,8 @@ public interface MainContract {
 
             void setContext(Context context);
 
+            Context getContext();
+
             void onPause();
 
             void onCreate();

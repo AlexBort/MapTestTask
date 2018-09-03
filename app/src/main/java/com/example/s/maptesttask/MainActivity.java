@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
         MainContract.MainView {
 
+
     public static final int PERMISSION_REQUEST_CODE_ACTIVITY = 1101;
     public static final String PERMISSIONS_LOCATION[] = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String TAG = "MainActivity";
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         initPresenter();
         setUpMapIfNeeded();
-        presenter.onCreate();
 
     }
 
@@ -57,20 +57,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        presenter.onResume();
+        //  presenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.onPause();
+        //   presenter.onPause();
     }
 
     private void setUpMapIfNeeded() {
-        if (mGoogleMap == null) {
-            supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            supportMapFragment.getMapAsync(this);
-        }
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(this);
     }
 
 
@@ -80,8 +78,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mGoogleMap = googleMap;
         if (checkLocation()) {
             mGoogleMap.setMyLocationEnabled(true);
+            //  AndroidUtils.gpsNetToastNotif(this);
         }
-        AndroidUtils.gpsNetToastNotif(this);
+
     }
 
 
@@ -109,13 +108,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void showMarkerOnMap(LatLng latLng) {
-        LocationUtils.setMarker(latLng, mGoogleMap);
+        if (latLng != null)
+            LocationUtils.setMarker(latLng, mGoogleMap);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
- //       presenter.connectLocation();
+        //       presenter.connectLocation();
     }
 
     private void initPresenter() {

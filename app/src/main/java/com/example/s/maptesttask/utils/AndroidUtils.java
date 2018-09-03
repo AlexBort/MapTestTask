@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.example.s.maptesttask.App;
 import com.example.s.maptesttask.R;
 import com.example.s.maptesttask.location_service.DistanceService;
 
@@ -25,14 +26,15 @@ public class AndroidUtils {
     public static void startService(Context context/*, float meters*/) {
         DistanceService service = new DistanceService(context);
         Intent intentService = new Intent(context, service.getClass());
+        intentService.putExtra(App.FLOAT_KEY, 3);
         context.startService(intentService);
     }
 
     public static void gpsNetToastNotif(/*boolean flagNotif, */Context context) {
-       // if (flagNotif) {
-            Toast.makeText(context, Constants.SWITCH_NOTIF, Toast.LENGTH_SHORT).show();
-            return;
-      //  }
+        // if (flagNotif) {
+        Toast.makeText(context, Constants.SWITCH_NOTIF, Toast.LENGTH_SHORT).show();
+        return;
+        //  }
     }
 
     public static void hideKeyBoard(Context context, View view) {
